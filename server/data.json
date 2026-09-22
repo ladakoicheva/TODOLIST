@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "text": "Buy groceries"
+  },
+  {
+    "id": 2,
+    "text": "Reply to work emails"
+  },
+  {
+    "id": 3,
+    "text": "Do morning workout"
+  },
+  {
+    "id": 4,
+    "text": "Read 20 pages of a book"
+  },
+  {
+    "id": 5,
+    "text": "Plan weekly schedule"
+  },
+  {
+    "id": 6,
+    "text": "Schedule a doctor appointment"
+  },
+  {
+    "id": 7,
+    "text": "Clean the workspace"
+  },
+  {
+    "id": 8,
+    "text": "Water indoor plants"
+  },
+  {
+    "id": 9,
+    "text": "Review new vocabulary"
+  },
+  {
+    "id": 10,
+    "text": "Back up important files"
+  }
+]

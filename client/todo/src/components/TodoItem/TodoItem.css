@@ -1,0 +1,26 @@
+.li_item {
+  flex-wrap: wrap;
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+ 
+
+}
+
+.li_item span {
+
+  white-space: nowrap;
+  overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icons {
+  display: flex;
+  gap: 5px;
+}
+
+.icons svg {
+  cursor: pointer;
+}
