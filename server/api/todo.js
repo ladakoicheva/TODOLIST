@@ -19,7 +19,7 @@ router.post('/add', (req, res) => {
 router.delete('/delete/:id', (req,res) => {
   const id = req.params.id;
   const index = data.findIndex((el) => el.id == id);
-  if (index == -1) return res.status(404).json({ data: null,e:'no elem'})
+  if (index === -1) return res.status(404).json({ data: null,e:'no elem'})
   data.splice(index, 1);
   return res.status(200).json({ data: id })
 })
@@ -28,7 +28,7 @@ router.patch('/edit/:id', (req, res) => {
   const newData = req.body;
   const id = req.params.id
   const index = data.findIndex((el) => el.id == id);
-  if (index == -1) return res.status(404).json({ data: null, e: 'no elem to update' })
+  if (index === -1) return res.status(404).json({ data: null, e: 'no elem to update' })
   data[index] = {
     ...data[index],
     ...newData,

@@ -1,4 +1,4 @@
 export interface TodosI{
-  id: number,
+  id:  string,
   text: string
 }

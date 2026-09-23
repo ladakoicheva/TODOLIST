@@ -1,25 +1,29 @@
 import { useRef } from "react";
 import type { TodosI } from "../../types/todoTypes/todo";
 import "./TodoItem.css";
+import { memo } from "react";
 
-type Props = {
+type props = {
   item: TodosI;
-  deleteTodo: (id: number) => Promise<void>;
-  edit: { id: number; isEdit: boolean }[];
-  setEditTrue: (id: number) => void;
-  updateTodo: (id: number, newText: string, oldText: string) => Promise<void> 
+  deleteTodo: (id: string) => Promise<void>;
+  isEdit: boolean;
+  setEditTrue: (id: string) => void;
+  updateTodo: (id: string, newText: string, oldText: string) => Promise<void> 
 };
 
-export default function TodoItem({
+ function TodoItem({
   item,
   deleteTodo,
-  edit,
+  isEdit,
   setEditTrue,
   updateTodo,
-}: Props) {
-  const isEdit = edit.find((el) => el.id === item.id)?.isEdit;
-  const inputRef = useRef<HTMLInputElement>(null);
+}: props) {
 
+  console.log('render item');
+
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  
   const handleBlur = () => {
     if (inputRef.current) {
       updateTodo(item.id, inputRef.current.value, item.text);
@@ -62,7 +66,11 @@ export default function TodoItem({
         </svg>
 
         <svg
-          onClick={() => setEditTrue(item.id)}
+          onClick={() => {
+            setEditTrue(item.id)
+             if(inputRef.current) inputRef.current.focus();
+          }
+          }
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           width="24"
@@ -80,3 +88,13 @@ export default function TodoItem({
     </li>
   );
 }
+
+const getIsRender = (prev: props, next: props) => {
+return (
+    prev.isEdit === next.isEdit &&
+    prev.item.text === next.item.text 
+   
+  );
+}
+
+export default memo(TodoItem,getIsRender)
