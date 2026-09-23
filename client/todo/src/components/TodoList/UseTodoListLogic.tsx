@@ -30,7 +30,7 @@ export default function UseTodoListLogic() {
     if (req.ok) {
       const res = await req.json();
       const editArr = res.data.map((el: TodosI) => ({
-        id: String(el.id),
+        id: el.id,
         isEdit: false,
       }));
       setTodos(res.data);
@@ -51,7 +51,7 @@ export default function UseTodoListLogic() {
 
     if (req.ok) {
       const res = await req.json();
-      const todo = { id: String(res.data.id), isEdit: false };
+      const todo = { id: res.data.id, isEdit: false };
       
  
       setTodos((prev) => [...prev, res.data]);
