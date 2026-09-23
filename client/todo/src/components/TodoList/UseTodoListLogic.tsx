@@ -1,95 +1,58 @@
 import { useEffect, useState } from 'react';
 import type { TodosI } from '../../types/todoTypes/todo';
+import { deleteTodo } from '../../api/todo';
+import { getTodos } from '../../api/todo';
+import { addTodo } from '../../api/todo';
+import { updateTodo } from '../../api/todo';
 
 export default function UseTodoListLogic() {
-  const reqLink = 'http://localhost:3000';
+
   const [todos, setTodos] = useState<TodosI[]>([]);
-  const [edit, setEdit] = useState<{ id: string; isEdit: boolean }[]>([]);
+ 
 
-  const setEditTrue = (id: string) => {
-    setEdit((prev) => {
-     
-      const elem = prev.find((el) => el.id === id);
-      if (!elem) return prev;
-      elem.isEdit = true;
-      return [...prev];
-    });
-  };
-
-  const cancelEdit = (id: string) => {
-    setEdit((prev) => {
+  const getTodosItems = async () => {
+    const res = await getTodos();
     
-      const elem = prev.find((el) => el.id === id);
-      if (elem) elem.isEdit = false;
-      return [...prev];
-    });
-  };
+   if (res.ok === false) return ;
+    const todos = res.data;
+  
 
-  const getTodos = async () => {
-    const req = await fetch(reqLink);
-    if (req.ok) {
-      const res = await req.json();
-      const editArr = res.data.map((el: TodosI) => ({
-        id: el.id,
-        isEdit: false,
-      }));
-      setTodos(res.data);
-      setEdit(editArr);
-    }
+    setTodos(todos);
+  
   };
+  
 
-  const addTodo = async (item: string) => {
+  const addTodoItem = async (item: string) => {
     if (item.trim() === '') return;
 
-    const req = await fetch(reqLink + '/add', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ text: item }),
-    });
-
-    if (req.ok) {
-      const res = await req.json();
-      const todo = { id: res.data.id, isEdit: false };
-      
+    const res = await addTodo(item);
+    if (res.ok === false) return;
  
+    
       setTodos((prev) => [...prev, res.data]);
-      setEdit((prev) => [...prev, todo]);
+     
     }
-  };
-
-  const deleteTodo = async (id: string) => {
-    const req = await fetch(`${reqLink}/delete/${id}`, {
-      method: 'DELETE',
-    });
-
-    if (req.ok) {
-      const res = await req.json();
+  
+  const deleteTodoItem = async (id: string) => {
+    const res = await deleteTodo(id);
+     if (res.ok === false) return;
       const deletedId = res.data;
 
       setTodos((prev) => prev.filter((el) => el.id !== deletedId));
-      setEdit((prev) => prev.filter((el) => el.id !== deletedId));
-    }
+   
+   
   };
 
-  const updateTodo = async (id: string, item: string, oldText: string) => {
+  const updateTodoItem = async (id: string, item: string, oldText: string) => {
     if (item.trim() === '' || item === oldText) {
-      cancelEdit(id);
+
       return;
     }
 
-    const req = await fetch(`${reqLink}/edit/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ text: item }),
-    });
-
-    if (req.ok) {
-      const res = await req.json();
-      cancelEdit(id);
+    const res = await updateTodo(id,item)
+    if(!res.ok) return 
+    
+      
 
 
       setTodos((prev) => {
@@ -103,19 +66,18 @@ export default function UseTodoListLogic() {
         };
         return [...prev];
       });
-    }
+  
   };
 
   useEffect(() => {
-    getTodos();
+    getTodosItems();
   }, []);
 
   return {
     todos,
-    addTodo,
-    deleteTodo,
-    updateTodo,
-    edit,
-    setEditTrue,
+    addTodoItem,
+    deleteTodoItem,
+    updateTodoItem,
+ 
   };
 }

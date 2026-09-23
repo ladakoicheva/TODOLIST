@@ -4,47 +4,50 @@ import "./TodoItem.css";
 import { memo } from "react";
 
 type props = {
+  edit: boolean;
+  setEdit: (e:string|null) => void;
   item: TodosI;
   deleteTodo: (id: string) => Promise<void>;
-  isEdit: boolean;
-  setEditTrue: (id: string) => void;
   updateTodo: (id: string, newText: string, oldText: string) => Promise<void> 
 };
 
  function TodoItem({
   item,
   deleteTodo,
-  isEdit,
-  setEditTrue,
-  updateTodo,
+   updateTodo,
+   edit,
+  setEdit,
 }: props) {
 
   console.log('render item');
 
-
-  const inputRef = useRef<HTMLInputElement>(null);
+   const editRef = useRef<{ id: null|string}>({ id: null });
+   const inputRef = useRef<HTMLInputElement>(null);
+  
   
   const handleBlur = () => {
     if (inputRef.current) {
       updateTodo(item.id, inputRef.current.value, item.text);
     }
+    setEdit(null)
+    editRef.current.id = null
+
   };
 
   return (
-    <li className="li_item">
-      {!isEdit ? (
-        <span>{item.text}</span>
-      ) : (
-        <input
-          type="text"
-          ref={inputRef}
-          defaultValue={item.text}
-          autoFocus
-          onBlur={handleBlur}
-        
-        />
-      )}
-
+<li className="li_item">
+  {edit  ? (
+    <input
+      type="text"
+      ref={inputRef}
+      defaultValue={item.text}
+      autoFocus
+      onBlur={handleBlur}
+    />
+  ) : (
+    <span>{item.text}</span>
+  )}
+      
       <div className="icons">
         <svg
           onClick={() => deleteTodo(item.id)}
@@ -67,8 +70,8 @@ type props = {
 
         <svg
           onClick={() => {
-            setEditTrue(item.id)
-             if(inputRef.current) inputRef.current.focus();
+            setEdit(item.id)
+          
           }
           }
           xmlns="http://www.w3.org/2000/svg"
@@ -90,11 +93,11 @@ type props = {
 }
 
 const getIsRender = (prev: props, next: props) => {
-return (
-    prev.isEdit === next.isEdit &&
-    prev.item.text === next.item.text 
-   
-  );
+
+
+  return prev.item.text === next.item.text && prev.edit === next.edit;
+  
+  
 }
 
 export default memo(TodoItem,getIsRender)
