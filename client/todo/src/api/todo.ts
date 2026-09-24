@@ -1,6 +1,6 @@
 import type { TodosI } from "../types/todoTypes/todo";
 
-const reqLink = 'http://localhost:3000';
+const reqLink = 'http://localhost:3000/todos';
 
 type typeReq = 'POST' | 'GET' | 'DELETE' | 'PATCH';
 type typeResponseGood<A> = { ok: true, data : A };
@@ -27,17 +27,17 @@ const todoAPI = async < Response, T = undefined > (url: string| null, type :  ty
   } 
 
   export const addTodo = async (item: string) : Promise<typeResponseAPI<TodosI>>  => {
-    const data = await todoAPI<TodosI, {text : string}>('add', 'POST', {text : item});
+    const data = await todoAPI<TodosI, {text : string}>('', 'POST', {text : item});
     return data
   };
 
   export const deleteTodo = async (id: string):Promise<typeResponseAPI<string>>  => {
-    const data = await todoAPI<string>( 'delete/'+id, 'DELETE');
+    const data = await todoAPI<string>( id, 'DELETE');
     return data
   };
 
   export const updateTodo = async (id: string, item: string) : Promise<typeResponseAPI<TodosI>> => {
-    const data = await todoAPI<TodosI, {text : string}>('edit/'+id, 'PATCH', {text : item});
+    const data = await todoAPI<TodosI, {text : string}>(id, 'PATCH', {text : item});
     return data
   };
 
