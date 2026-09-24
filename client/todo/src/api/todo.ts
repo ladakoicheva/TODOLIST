@@ -44,4 +44,10 @@ const todoAPI = async < Response, T = undefined > (url: string| null, type :  ty
 export const getTodos = async () : Promise<typeResponseAPI<TodosI[]>> => {
    const data = await todoAPI<TodosI[]>("", 'GET');
     return data
-  }
+}
+  
+export const getOne = async (id:string): Promise<typeResponseAPI<TodosI>> => {
+  const data = await todoAPI<TodosI>(id, 'GET');
+  console.log(data)
+  return data;
+}

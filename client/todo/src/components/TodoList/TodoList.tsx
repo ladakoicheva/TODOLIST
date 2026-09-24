@@ -13,7 +13,7 @@ export default function TodoList() {
   const setEdit = (id:string|null) => {
     setEditingId(id)
   }
-  console.log('render list')
+
   
   const add = () => {
      if (inputRef.current == null ) return
@@ -42,11 +42,16 @@ export default function TodoList() {
   
   return (
   <>
-      <div>
-        <input ref={inputRef} type="text" placeholder="...todo" />
-        <button onClick={add}>ADD</button>
+      <div className="todo_input" >
+       
+        <div className="todo_input_items">
+          <input ref={inputRef} type="text" placeholder="...todo" />
+          <button onClick={add}>ADD</button>
+        </div>
+  
       </div>
-    <ul className="list">
+      <ul className="list">
+        
       {todos.length >0 ? memoItems: <h3>No items</h3>}
     </ul>
     </>

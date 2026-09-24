@@ -1,10 +1,17 @@
 .li_item {
   flex-wrap: wrap;
-  width: 40%;
+  max-width: 450px;
+  width: 100%;
   display: flex;
   justify-content: space-between;
- 
+  cursor: pointer;
+  border-radius: 20px;
 
+}
+
+.li_item:hover{
+  transition: all .0.3s ease;
+  background: rgb(230, 215, 215);
 }
 
 .li_item span {
@@ -24,3 +31,9 @@
 .icons svg {
   cursor: pointer;
 }
+
+.deleteIcon:hover,.editIcon:hover,.infoIcon:hover{
+  transition: all .3s;
+  stroke: black;
+}
+

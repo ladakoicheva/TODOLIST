@@ -7,6 +7,13 @@ router.get('/', (req, res) => {
   return res.status(200).json({data})
 })
 
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+  const todo = data.find((el) => el.id == id);
+  if (todo === undefined) res.status(404).json({ data: null, e: 'no elem' })
+  return res.status(200).json({ data:todo })
+})
+
 router.post('/add', (req, res) => {
   const id = uuidv4();
   const newItem = { ...req.body };

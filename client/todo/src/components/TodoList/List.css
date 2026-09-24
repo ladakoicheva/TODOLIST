@@ -1,7 +1,91 @@
-.list{
+.list {
   display: flex;
   flex-direction: column;
-  align-items:center;
+  align-items: center;
+
+  width: 100%;
+  gap: 15px;
+
+}
+
+
+.list li {
+  cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+input {
+  background: transparent;
+  outline: none;
+
+}
+
+.todo_input {
+
+  display: flex;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 900px;
+  min-height: 40px;
+  align-items: center;
   justify-content: center;
-  gap:15px;
+  align-self: center;
+
+}
+
+.todo_input input:focus {
+
+  box-shadow: 0 0 0 2px rgba(233, 30, 99, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  border-color: #e91e63;
+}
+
+.todo_input_items {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-self: center;
+  gap: 10px;
+
+  border-radius: 8px;
+
+}
+
+.todo_input_items button {
+
+  flex-shrink: 0;
+  color: black;
+  align-self: center;
+  height: 100%;
+  width: 50px;
+  background: rgb(230, 215, 215);
+  cursor: pointer;
+  border-radius: 7px;
+  border: none;
+
+}
+
+.todo_input_items button:hover {
+  background: rgba(230, 215, 215, 0.8);
+}
+
+input {
+  flex: 1 1 0;
+  /* flex-grow, flex-shrink, flex-basis */
+  min-width: 0;
+  font-size: 18px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 15px;
+  padding-left: 15px;
+  outline: none;
+  border: 1px solid gray;
+  border-radius: 7px;
+  color: black;
+}
+
+li input {
+  border: none;
 }

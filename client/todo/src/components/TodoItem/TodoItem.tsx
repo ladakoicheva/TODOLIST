@@ -2,6 +2,7 @@ import { useRef } from "react";
 import type { TodosI } from "../../types/todoTypes/todo";
 import "./TodoItem.css";
 import { memo } from "react";
+import { useNavigate } from "react-router";
 
 type props = {
   edit: boolean;
@@ -19,18 +20,16 @@ type props = {
   setEdit,
 }: props) {
 
-  console.log('render item');
 
-   const editRef = useRef<{ id: null|string}>({ id: null });
-   const inputRef = useRef<HTMLInputElement>(null);
-  
-  
+   
+   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
   const handleBlur = () => {
     if (inputRef.current) {
       updateTodo(item.id, inputRef.current.value, item.text);
     }
     setEdit(null)
-    editRef.current.id = null
+    
 
   };
 
@@ -43,6 +42,9 @@ type props = {
       defaultValue={item.text}
       autoFocus
       onBlur={handleBlur}
+     onKeyDown={(e) => {
+  if (e.key === "Enter") handleBlur();
+}}
     />
   ) : (
     <span>{item.text}</span>
@@ -51,6 +53,7 @@ type props = {
       <div className="icons">
         <svg
           onClick={() => deleteTodo(item.id)}
+          className="deleteIcon"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           width="24"
@@ -74,6 +77,7 @@ type props = {
           
           }
           }
+          className="editIcon"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
           width="24"
@@ -87,6 +91,21 @@ type props = {
           <path d="M12 20h9" />
           <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
         </svg>
+        <svg
+          onClick={()=>navigate(`/${item.id}`)}
+          className="infoIcon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20" height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"></circle>
+  <line x1="12" y1="16" x2="12" y2="12"></line>
+  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+</svg>
       </div>
     </li>
   );
