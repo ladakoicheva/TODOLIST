@@ -4,7 +4,7 @@ const reqLink = 'http://localhost:3000/todos';
 
 type typeReq = 'POST' | 'GET' | 'DELETE' | 'PATCH';
 type typeResponseGood<A> = { ok: true, data : A };
-type typeResponseBad = { ok: false };
+type typeResponseBad = { ok: false ,e?:string};
 
 type typeResponseAPI<T> = typeResponseGood<T> | typeResponseBad;
 
