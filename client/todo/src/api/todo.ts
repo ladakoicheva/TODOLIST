@@ -1,3 +1,4 @@
+
 import type { TodosI } from "../types/todoTypes/todo";
 
 const reqLink = 'http://localhost:3000/todos';
@@ -36,8 +37,8 @@ const todoAPI = async < Response, T = undefined > (url: string| null, type :  ty
     return data
   };
 
-  export const updateTodo = async (id: string, item: string) : Promise<typeResponseAPI<TodosI>> => {
-    const data = await todoAPI<TodosI, {text : string}>(id, 'PATCH', {text : item});
+  export const updateTodo = async (id: string, item:Partial<TodosI>) : Promise<typeResponseAPI<TodosI>> => {
+    const data = await todoAPI<TodosI, Partial<TodosI>>(id, 'PATCH', item);
     return data
   };
 

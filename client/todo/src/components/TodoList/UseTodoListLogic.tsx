@@ -5,6 +5,7 @@ import { getTodos } from '../../api/todo';
 import { addTodo } from '../../api/todo';
 import { updateTodo } from '../../api/todo';
 
+
 export default function UseTodoListLogic() {
 
   const [todos, setTodos] = useState<TodosI[]>([]);
@@ -43,16 +44,12 @@ export default function UseTodoListLogic() {
    
   };
 
-  const updateTodoItem = async (id: string, item: string, oldText: string) => {
-    if (item.trim() === '' || item === oldText) {
-
-      return;
-    }
-
-    const res = await updateTodo(id,item)
+  const updateTodoItem = async(id: string, item:Partial<TodosI> ) => {
+   
+    const res = await updateTodo(id,item )
     if(!res.ok) return 
-    
-      
+    console.log(res.data)
+  
 
 
       setTodos((prev) => {
@@ -68,6 +65,9 @@ export default function UseTodoListLogic() {
       });
   
   };
+
+
+
 
   useEffect(() => {
     getTodosItems();

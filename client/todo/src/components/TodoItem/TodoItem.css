@@ -1,39 +1,70 @@
 .li_item {
-  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
   max-width: 450px;
   width: 100%;
-  display: flex;
   justify-content: space-between;
   cursor: pointer;
   border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 10px 15px;
+ 
+
 
 }
 
-.li_item:hover{
-  transition: all .0.3s ease;
+.li_item:hover {
+  transition: all 0.3s ease;
   background: rgb(230, 215, 215);
 }
 
 .li_item span {
 
+
+
+  min-width: 0;
   white-space: nowrap;
-  overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
+
+
 }
 
 .icons {
   display: flex;
+  align-items: center;
   gap: 5px;
+  flex-shrink: 0
 }
 
 .icons svg {
   cursor: pointer;
 }
 
-.deleteIcon:hover,.editIcon:hover,.infoIcon:hover{
+.deleteIcon:hover,
+.editIcon:hover,
+.infoIcon:hover {
   transition: all .3s;
   stroke: black;
 }
 
+.li_text_i {
+  flex: 1;
+min-width: 0;
+ display: flex;
+ gap: 5px;
+ justify-content: flex-start;
+ align-items: center;
+  
+}
+
+.li_text_i input {
+  cursor: pointer;
+ 
+}
+
+.done {
+  text-decoration: line-through;
+}
