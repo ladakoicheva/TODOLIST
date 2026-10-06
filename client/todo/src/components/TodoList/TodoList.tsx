@@ -3,6 +3,11 @@ import UseTodoListLogic from "./UseTodoListLogic";
 import { useMemo, useRef } from "react";
 import { useState } from "react";
 import './List.css';
+import { TodosFields } from "../../types/todoTypes/todo";
+import DeleteIcon from "../../icons/DeleteIcon";
+import EditIcon from "../../icons/EditIcon";
+import InfoIcon from "../../icons/InfoIcon";
+import Button from "../Button/Button";
 
 
 export default function TodoList() {
@@ -10,15 +15,16 @@ export default function TodoList() {
   const { todos, addTodoItem, deleteTodoItem, updateTodoItem } = UseTodoListLogic();
   const [editingId, setEditingId] = useState<string | null>(null);
 
-  const setEdit = (id:string|null) => {
-    setEditingId(id)
-  }
-
+const setEdit = (id: string | null) => {
+    setEditingId(id);
+  };
   
   const add = () => {
+    
      if (inputRef.current == null ) return
-      const value = inputRef.current.value 
-      addTodoItem(value)
+    const value = inputRef.current.value 
+    if(value.trim() === "") return
+     addTodoItem({ [TodosFields.status]: 'NEW', [TodosFields.Text]:value, [TodosFields.IsDone]:false})
       inputRef.current.value = "";
   }
    
@@ -29,12 +35,14 @@ export default function TodoList() {
         return (
           <TodoItem key={el.id}
             item={el}
-            deleteTodo={deleteTodoItem}
             updateTodo={updateTodoItem}
             edit={edit}
             setEdit={setEdit}
-          />
-          
+            >
+            <DeleteIcon deleteTodo={deleteTodoItem} id={el.id}/>
+            {!el.isDone && <EditIcon edit={setEdit} id={el.id} />}
+            <InfoIcon id={el.id} />
+          </TodoItem>
       
         )
       })  
@@ -46,7 +54,7 @@ export default function TodoList() {
        
         <div className="todo_input_items">
           <input ref={inputRef} type="text" placeholder="...todo" />
-          <button onClick={add}>ADD</button>
+          <Button onClick={add} text="ADD" isAsync={true} />
         </div>
   
       </div>

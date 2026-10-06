@@ -23,8 +23,8 @@ export default function UseTodoListLogic() {
   };
   
 
-  const addTodoItem = async (item: string) => {
-    if (item.trim() === '') return;
+  const addTodoItem = async (item: Partial<TodosI>) => {
+    
 
     const res = await addTodo(item);
     if (res.ok === false) return;

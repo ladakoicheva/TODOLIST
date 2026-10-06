@@ -2,11 +2,12 @@ import path from 'path'
 import fs from 'node:fs/promises'
 import { __dirname } from '../path.js';
 import { MINIMAZE } from '../path.js';
+import { mkdir } from 'node:fs';
 
 // const path = require('path')
 // const fs = require('fs').promises
 
-const getLink = (...url) => path.join(__dirname, ...url);
+export const getLink = (...url) => path.join(__dirname, ...url);
 
 
 export const getFile = async (...url) => {
@@ -26,7 +27,23 @@ export const getFile = async (...url) => {
 export const setFileJSON = async (data, ...url) => {
   try {
     const link = getLink(...url);
+
     await fs.writeFile(link, JSON.stringify(data, null, MINIMAZE), 'utf8')
+    return { ok: true, data }
+  } catch (error) {
+    return { ok: false, e: error };
+  }
+}
+
+export const setFileDirJSON = async (data, ...url) => {
+  try {
+    const link = getLink(...url);
+    const link2 = getLink(...url, 'user.json');
+    console.log(link2,data)
+    await fs.mkdir(link, {recursive : true})
+   
+
+    await fs.writeFile(link2, JSON.stringify(data, null, MINIMAZE), 'utf8')
     return { ok: true, data }
   } catch (error) {
     return { ok: false, e: error };

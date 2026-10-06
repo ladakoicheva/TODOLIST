@@ -1,7 +1,8 @@
-import { getTodoFile,getErrorReq } from "./helpers.js";
-import { setTodoFile } from "./helpers.js";
+
+import { setTodoFile, getErrorReq, getTodoFile } from "./helpers.js";
+
 import { typeTodo } from "./types.js";
-import { ADD,DELETE,UPDATE,GET_ONE } from "./actions.js";
+import { ADD, DELETE, UPDATE, GET_ONE } from "./actions.js";
 
 export const dispatchTodoAction = async (action) => {
   const todos = await getTodoFile();
@@ -12,8 +13,6 @@ export const dispatchTodoAction = async (action) => {
 
 
 const reducer = async (todos, { type, ...rest }) => {
-
-
   switch (type) {
 
     case typeTodo.ADD: {
@@ -29,10 +28,9 @@ const reducer = async (todos, { type, ...rest }) => {
 
       break;
     }
-    case typeTodo.GET_ONE: {
-      return GET_ONE(todos,rest.id)
-    }
-    default: return {ok:true,data:todos};
+    case typeTodo.GET_ONE: return GET_ONE(todos, rest.id)
+
+    default: return { ok: true, data: todos };
   }
 
   const response = await setTodoFile(todos)

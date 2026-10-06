@@ -1,0 +1,52 @@
+.blur {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+}
+
+.modal {
+  z-index: 100;
+  position: relative;
+  padding-top:15px ;
+  padding-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+  background: rgb(230, 215, 215);
+  max-width: 450px;
+  max-height: 450px;
+  width: 96%;
+  border-radius: 8px;
+  aspect-ratio: 1/1;
+}
+
+.modal input,
+.modal label {
+  display: block;
+  align-self: center;
+}
+
+.modal input {
+  width: 96%;
+}
+
+.modalItem{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.close{
+  position: absolute;
+  right: 5px;
+  top: 0;
+  cursor: pointer;
+}

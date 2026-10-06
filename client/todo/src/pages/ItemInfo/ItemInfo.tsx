@@ -2,11 +2,12 @@ import { useEffect, useState } from "react"
 import type { TodosI } from "../../types/todoTypes/todo";
 import { getOne } from "../../api/todo";
 import { useParams } from "react-router";
-import './ItemInfo.css';
+import styles from './ItemInfo.module.css'
 
 export default function ItemInfo() {
   const [todo, setTodo] = useState<TodosI | null>(null);
   const params = useParams<string>();
+
   useEffect(() => {
     const getOneI = async () => {
       console.log(params.id)
@@ -21,7 +22,7 @@ export default function ItemInfo() {
 
   return (
     <div>
-      <h1 className="todoId">{todo?.id}</h1>
+      <h1 className={styles.todoId}>{todo?.id}</h1>
       <h2>{todo?.text}</h2>
     </div>
   )

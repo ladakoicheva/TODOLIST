@@ -5,3 +5,8 @@ export const typeTodo = {
   GET: 'GET',
   GET_ONE:'GET_ONE'
 }
+
+export const status = {
+  NEW: 'NEW',
+  UPDATED: 'UPDATED',
+}

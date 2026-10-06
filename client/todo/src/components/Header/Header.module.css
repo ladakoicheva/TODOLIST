@@ -1,0 +1,38 @@
+.header {
+  display: flex;
+  justify-content: center;
+  background: rgb(230, 215, 215);
+  margin-bottom: 15px;
+  min-height: 70px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.header nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  justify-content: space-between;
+  max-width: 900px;
+  width: 100%;
+}
+
+
+.userInfo {
+  flex: 1;
+  min-width: 50px;
+
+}
+
+.userInfo h2 {
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+
+
+}

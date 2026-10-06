@@ -1,7 +1,7 @@
 
 import type { TodosI } from "../types/todoTypes/todo";
 
-const reqLink = 'http://localhost:3000/todos';
+const reqLink = import.meta.env.VITE_API_URL
 
 type typeReq = 'POST' | 'GET' | 'DELETE' | 'PATCH';
 type typeResponseGood<A> = { ok: true, data : A };
@@ -27,8 +27,9 @@ const todoAPI = async < Response, T = undefined > (url: string| null, type :  ty
     }
   } 
 
-  export const addTodo = async (item: string) : Promise<typeResponseAPI<TodosI>>  => {
-    const data = await todoAPI<TodosI, {text : string}>('', 'POST', {text : item});
+  export const addTodo = async (item: Partial<TodosI>) : Promise<typeResponseAPI<TodosI>>  => {
+    const data = await todoAPI<TodosI, Partial<TodosI>>('', 'POST', item);
+    // const data = await todoAPI<TodosI, {text : string}>('', 'POST', {...item, asda : 22, ss : 0});
     return data
   };
 
@@ -49,6 +50,5 @@ export const getTodos = async () : Promise<typeResponseAPI<TodosI[]>> => {
   
 export const getOne = async (id:string): Promise<typeResponseAPI<TodosI>> => {
   const data = await todoAPI<TodosI>(id, 'GET');
-  console.log(data)
   return data;
 }

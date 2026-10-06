@@ -2,15 +2,13 @@
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
-  max-width: 450px;
   width: 100%;
   justify-content: space-between;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 8px;
   overflow: hidden;
-  cursor: pointer;
   padding: 10px 15px;
- 
+  background: white;
 
 
 }
@@ -24,7 +22,7 @@
 
 
 
-  min-width: 0;
+  min-width: 0px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -52,19 +50,33 @@
 
 .li_text_i {
   flex: 1;
-min-width: 0;
- display: flex;
- gap: 5px;
- justify-content: flex-start;
- align-items: center;
-  
+  min-width: 0;
+  display: flex;
+  gap: 5px;
+  justify-content: flex-start;
+  align-items: center;
+
 }
 
 .li_text_i input {
   cursor: pointer;
- 
+
 }
 
 .done {
   text-decoration: line-through;
+}
+
+.link{
+  display: flex;
+  align-items: center;
+  color:gray;
+}
+
+.link:visited{
+  color:gray;
+}
+
+.link:hover{
+  color:black
 }
