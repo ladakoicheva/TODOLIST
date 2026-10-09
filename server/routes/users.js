@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { registerUser ,getUser} from "../controller/users_controller/users_controller.js";
-
-
+import { registerUser,loginUser,logout } from "../controllers/authController.js";
+import { getUser } from "../controllers/userController.js";
+import { authorize } from "../middlewares/auth.js";
 
 
 
@@ -9,9 +9,9 @@ const userRouter = Router();
 
 
 userRouter.post('/register',registerUser)
-userRouter.get('/:email',getUser)
-
-
+userRouter.post('/login',loginUser)
+userRouter.get('/authorization',authorize,getUser)
+userRouter.get('/logout',logout)
 
 
 

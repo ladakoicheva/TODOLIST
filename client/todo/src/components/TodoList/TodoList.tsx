@@ -15,6 +15,8 @@ export default function TodoList() {
   const { todos, addTodoItem, deleteTodoItem, updateTodoItem } = UseTodoListLogic();
   const [editingId, setEditingId] = useState<string | null>(null);
 
+
+  console.log(todos)
 const setEdit = (id: string | null) => {
     setEditingId(id);
   };

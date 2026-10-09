@@ -5,7 +5,7 @@ type props = {
   text: string,
   onClick: () => void,
   isAsync :boolean,
-
+  type?:string
   
 }
 

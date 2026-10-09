@@ -1,4 +1,4 @@
-import { shemeValidation } from "./validationSchema.js";
+import { shemeValidation } from "../validation/validationSchema.js";
 
 
 
@@ -53,6 +53,4 @@ export const validate = (req, res, next) => {
   next();
 }
 // [shemeValidation.text, shemeValidation.isDone, shemeValidation.status]
-
-
 

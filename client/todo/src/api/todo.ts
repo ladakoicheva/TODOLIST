@@ -6,17 +6,24 @@ const reqLink = import.meta.env.VITE_API_URL
 type typeReq = 'POST' | 'GET' | 'DELETE' | 'PATCH';
 type typeResponseGood<A> = { ok: true, data : A };
 type typeResponseBad = { ok: false ,e?:string};
-
+type headers = {
+  'Content-Type': string,
+  'Authorization'?:string
+}
 type typeResponseAPI<T> = typeResponseGood<T> | typeResponseBad;
 
 
 const todoAPI = async < Response, T = undefined > (url: string| null, type :  typeReq = 'GET', body ? : null | T) : Promise<typeResponseAPI<Response>> => {
   try {
+       const token = localStorage.getItem('token');
+    const headers:headers = {
+      'Content-Type': 'application/json',
+    };
+    if (token) headers['Authorization']= ` ${token}`
+    
     const response = await fetch(url ? `${reqLink}/${url}` : reqLink, {
       method: type,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: body ? JSON.stringify(body) : null,
      });
       if(!response.ok) return {ok : false}

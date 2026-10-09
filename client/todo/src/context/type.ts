@@ -11,4 +11,4 @@ export enum ModeType {
   SIGN_UP = 'Sign Up'
 }
 
-export type userI = {email:string,id:string}
+export type userI = {email:string,id:string,token:string}

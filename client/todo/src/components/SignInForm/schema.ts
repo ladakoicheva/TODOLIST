@@ -9,9 +9,7 @@ const schema = Yup.object().shape({
     .min(6, "Password must be at least 6 characters")
     .max(20, "Password cannot exceed 20 characters")
     .required("Password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Passwords must match')
-  .required('Confirm password is required'),
+
 });
 
 export default schema
