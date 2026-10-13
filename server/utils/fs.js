@@ -19,7 +19,7 @@ export const deleteFile = async (...url) => {
     return getErrorReq(error)
   }
 }
-// await
+
 
 export const getFile = async (...url) => {
   try {

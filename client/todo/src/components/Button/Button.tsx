@@ -5,7 +5,8 @@ type props = {
   text: string,
   onClick: () => void,
   isAsync :boolean,
-  type?:string
+  type?: string,
+  style?:{}
   
 }
 
@@ -26,7 +27,9 @@ export default function Button(props:props) {
    
   }
   return (
+
     <button className={style.registerBTN}
+      style = {props.style}
       type='button'
       onClick={props.isAsync ? handleClick : props.onClick} disabled={isSubmitting}>
       {!isSubmitting ? props.text : <div className={style.loader}></div>}</button>

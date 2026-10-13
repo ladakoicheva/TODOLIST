@@ -5,7 +5,8 @@ import { getSuccessReq, getErrorReq } from "../utils/responseHelpers.js";
 //get one
 export const getUserFile = async (email) => {
   try {
-    const response = await getFile('users', email, 'user.json');
+    const response = await getFile('datas', 'users', email, 'user.json');
+    if (!response.ok) throw Error('no user')
     return getSuccessReq(response.data)
   } catch (e) {
     return getErrorReq(e)
@@ -22,7 +23,8 @@ export const getUserFile = async (email) => {
 
 export const setUsersFileDir = async (data, email) => {
   try {
-    const response = await setFileDirJSON(data, 'user.json', 'users', email);
+    const response = await setFileDirJSON(data, 'user.json', 'datas', 'users', email);
+    if (!response.ok) throw Error('failed to create user')
     return getSuccessReq(response.data)
   } catch (error) {
     return getErrorReq(error)
@@ -36,6 +38,7 @@ export const setUsersFileDir = async (data, email) => {
 export const setUsersFile = async (data, email) => {
   try {
     const response = await setFileJSON(data, 'users', email, 'user.json');
+    if (!response.ok) throw new Error('failed to create user')
     return getSuccessReq(response.data)
   } catch (error) {
     return getErrorReq(error)
@@ -55,6 +58,7 @@ export const getAllUsers = async () => {
     const userList = await readDir('users');
 
     const users = await Promise.all(userList.data.map((u) => getUserFile(u)));
+    
     return getSuccessReq(users)
   } catch (e) {
    return getErrorReq(e)

@@ -1,14 +1,13 @@
-import { deleteFile, setFileDirJSON,getFile  } from "../utils/fs.js";
+import { deleteFile, setFileDirJSON,getFile,setFileJSON  } from "../utils/fs.js";
 import { getLiveToken } from "../utils/authHelpers.js";
 import { getErrorReq,getSuccessReq } from "../utils/responseHelpers.js";
 import { generateToken } from "../utils/authHelpers.js";
-import { getUserFile } from "./userService.js";
-import { setUsersFile } from "./userService.js";
+
 
 
 export const deleteToken = async (token) => {
   try {
-    return await deleteFile('tokens', token + '.json');
+    return await deleteFile('datas','tokens', token + '.json');
   } catch (e) {
     return getErrorReq(e);
   }
@@ -17,7 +16,7 @@ export const deleteToken = async (token) => {
 export const getFileToken = async (token) => {
   try {
    
-    return await getFile('tokens', token + '.json');
+    return await getFile('datas','tokens', token + '.json');
   } catch (error) {
     return getErrorReq(error);
   }
@@ -26,33 +25,20 @@ export const getFileToken = async (token) => {
 export const generateFileTokens = async (token, email) => {
   try {
     const data = { email, date: getLiveToken() };
-    return await setFileDirJSON(data, token + '.json', 'tokens');
+    await setFileDirJSON(data, token + '.json', 'datas', 'tokens');
+    return  getSuccessReq(token)
   } catch (error) {
     return getErrorReq(error);
   }
 };
 
-export const refreshToken = async (token, email) => {
+export const setFileToken = async (token,data) => {
   try {
-    const user = await getUserFile(email);
-    if (!user.ok) return getErrorReq('User not found');
-
-    const newToken = generateToken();
-    const userData = { ...user.data, token: newToken };
-
-   
-    const createRes = await generateFileTokens(newToken, email);
-    const updateRes = await setUsersFile(userData, email);
-
-    if (!createRes.ok || !updateRes.ok) {
-      return getErrorReq('Refresh failed');
-    }
-
-  
-    await deleteToken(token);
-
-    return getSuccessReq(newToken);
+    
+    return await setFileJSON(data,'datas', 'tokens',token + '.json');
   } catch (error) {
     return getErrorReq(error);
   }
-};
+}
+
+

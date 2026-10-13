@@ -2,11 +2,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import style from '../Modal/Modal.module.css';
 import Button from "../Button/Button";
 import schema from "./schema";
-import { registerUser } from "../../api/users";
-import type { userI } from "../../context/type";
+import { useAppDispatch } from "../../redux/hooks";
+import { register } from "../../features/user/userSlice";
 
 type Props = {
-  changeUserData: (user: userI) => void;
   closeModal: () => void;
 };
 
@@ -16,7 +15,8 @@ type FormValues = {
   confirmPassword: string;
 };
 
-export default function SignUpForm({ changeUserData, closeModal }: Props) {
+export default function SignUpForm({ closeModal }: Props) {
+  const dispatch = useAppDispatch();
 
   const initialValues: FormValues = {
     email: '',
@@ -24,48 +24,78 @@ export default function SignUpForm({ changeUserData, closeModal }: Props) {
     confirmPassword: '',
   };
 
-  const register = async (values: FormValues,{ resetForm }: { resetForm: () => void }) => {
-    const res = await registerUser(values);
-    if (!res.ok) return;
-    localStorage.setItem('token', res.data.token);
-    changeUserData(res.data as userI);
-    resetForm ()
-    closeModal();
+  const registerUser = async (values: FormValues, { resetForm }: { resetForm: () => void }) => {
+    try {
+      const res = await dispatch(register(values)).unwrap();
+
+      if (res.ok) {
+        resetForm();
+        closeModal();
+      }
+    } catch (err) {
+      console.error("Registration error:", err);
+    }
   };
 
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
-      onSubmit={register}
+      onSubmit={registerUser}
     >
-      {({ handleSubmit }) => (
+      {({ errors, touched, handleSubmit }) => (
         <Form>
           <label htmlFor="email">Email</label>
           <div className={style.modalItem}>
-            <Field id="email" type="email" name="email" placeholder="Email" />
+            <Field id="email" type="email" name="email" placeholder="Email" className ={touched.email && errors.email ? style.err : ''}/>
           </div>
-          <div className={style.errors}>
-            <ErrorMessage name="email" />
-          </div>
+          {touched.email && errors.email && (
+            <div className={style.errors}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#ff4d4d" />
+                <path d="M12 7V13" stroke="white" stroke-width="2" stroke-linecap="round" />
+                <circle cx="12" cy="16" r="1" fill="white" />
+              </svg>
+              <ErrorMessage name="email" />
+            </div>
+          )}
 
           <label htmlFor="password">Password</label>
           <div className={style.modalItem}>
-            <Field id="password" type="password" name="password" placeholder="Password" />
+            <Field
+              className ={touched.password && errors.password ? style.err : ''}
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Password" />
           </div>
-          <div className={style.errors}>
-            <ErrorMessage name="password" />
-          </div>
+          {touched.password && errors.password && (
+            <div className={style.errors}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#ff4d4d" />
+                <path d="M12 7V13" stroke="white" stroke-width="2" stroke-linecap="round" />
+                <circle cx="12" cy="16" r="1" fill="white" />
+              </svg>
+              <ErrorMessage name="password" />
+            </div>
+          )}
 
           <label htmlFor="confirmPassword">Confirm Password</label>
           <div className={style.modalItem}>
-            <Field id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm" />
+            <Field id="confirmPassword" type="password" name="confirmPassword" placeholder="Confirm"
+              className={touched.confirmPassword && errors.confirmPassword  ? style.err : ''} />
           </div>
-          <div className={style.errors}>
-            <ErrorMessage name="confirmPassword" />
-          </div>
+          {touched.confirmPassword && errors.confirmPassword && (
+            <div className={style.errors}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="10" fill="#ff4d4d" />
+                <path d="M12 7V13" stroke="white" stroke-width="2" stroke-linecap="round" />
+                <circle cx="12" cy="16" r="1" fill="white" />
+              </svg>
+              <ErrorMessage name="confirmPassword" />
+            </div>
+          )}
 
-      
           <Button
             onClick={handleSubmit}
             text="Sign Up"

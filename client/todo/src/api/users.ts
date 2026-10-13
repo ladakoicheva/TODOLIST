@@ -1,4 +1,4 @@
-import type { userI } from "../context/type";
+import type { userI } from "../features/user/types";
 const reqLink = import.meta.env.VITE_USER_API_URL
 
 type typeReq = 'POST' | 'GET' | 'DELETE' | 'PATCH';
@@ -23,13 +23,18 @@ const usersAPI = async < Response, T = undefined > (url: string| null, type :  t
       method: type,
       headers,
       body: body ? JSON.stringify(body) : null,
-     });
-      if(!response.ok) return {ok : false}
-    const res: { data: Response } = await response.json();
-      return {ok : true, data:res.data}
+    });
+  
+
+  
+    
+    const res = await response.json();
+     if (!res.ok) return {ok : false, e:  res.e}
+
+    return {ok : true, data:res.data}
   } catch (e) {
-    console.log(e)
-    return {ok : false}
+    const error = e instanceof Error ? e.message : (e as string);
+    return {ok : false,e:error}
     }
 } 
   
@@ -41,9 +46,9 @@ export const registerUser = async(formData: { confirmPassword: string, password:
 
 
 export const login = async (formData: { password: string, email: string }) => {
-  console.log(formData)
+
   const data = await usersAPI<userI, { password: string, email: string}>('login', 'POST', formData);
-  console.log(data)
+
   return data
 }
 
